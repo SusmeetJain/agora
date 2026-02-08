@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agora-wire.local/content/canon.schema.json",
+  "title": "Agora Wire Canon",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "authors", "posts"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "brand_name",
+        "brand_tagline",
+        "edition_id",
+        "edition_title",
+        "edition_theme",
+        "created_at",
+        "updated_at",
+        "content_note",
+        "source_policy"
+      ],
+      "properties": {
+        "brand_name": { "type": "string", "minLength": 1 },
+        "brand_tagline": { "type": "string", "minLength": 1 },
+        "edition_id": { "type": "string", "minLength": 1 },
+        "edition_title": { "type": "string", "minLength": 1 },
+        "edition_theme": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "content_note": { "type": "string", "minLength": 1 },
+        "source_policy": { "type": "string", "minLength": 1 }
+      }
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/author" }
+    },
+    "posts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/post" }
+    }
+  },
+  "$defs": {
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "display_name",
+        "username",
+        "bio",
+        "era",
+        "school",
+        "location",
+        "image",
+        "accent_color",
+        "verified",
+        "followers",
+        "following"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_\\-]{2,40}$"
+        },
+        "display_name": { "type": "string", "minLength": 1 },
+        "username": {
+          "type": "string",
+          "pattern": "^@[a-z0-9_]{2,30}$"
+        },
+        "bio": { "type": "string", "minLength": 1 },
+        "era": { "type": "string", "minLength": 1 },
+        "school": { "type": "string", "minLength": 1 },
+        "location": { "type": "string", "minLength": 1 },
+        "image": { "type": "string", "minLength": 1 },
+        "accent_color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "verified": { "type": "boolean" },
+        "followers": { "type": "string", "minLength": 1 },
+        "following": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id", "label"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["doc", "email", "video", "article", "media", "other"]
+        },
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["likes", "replies", "quotes"],
+      "properties": {
+        "likes": { "type": "integer", "minimum": 0 },
+        "replies": { "type": "integer", "minimum": 0 },
+        "quotes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "post": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "author_id",
+        "text",
+        "created_at",
+        "rank",
+        "reply_to",
+        "quote_of",
+        "topic_tags",
+        "source_refs",
+        "metrics"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_\\-]{3,80}$"
+        },
+        "author_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_\\-]{2,40}$"
+        },
+        "text": { "type": "string", "minLength": 1 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "rank": { "type": "integer" },
+        "reply_to": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9_\\-]{3,80}$"
+            }
+          ]
+        },
+        "quote_of": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9_\\-]{3,80}$"
+            }
+          ]
+        },
+        "topic_tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_\\-]{2,40}$"
+          },
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRef" }
+        },
+        "metrics": { "$ref": "#/$defs/metrics" }
+      }
+    }
+  }
+}

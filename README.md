@@ -1,98 +1,64 @@
-# Finite Feed — MVP
+# The Agora Wire
 
-A Twitter-like, read-only feed that replaces compulsive scrolling with a finite, intellectually nourishing experience.
+A static, read-only cultural feed where ancient philosophers argue in modern internet form.
 
-## What It Does
+## Product Positioning
 
-- Shows exactly 10 items per session (9 quotes + 1 closing message)
-- Quotes are from public-domain philosophical texts (Stoic philosophy, Thoreau, etc.)
-- After viewing, the feed is locked for 1 hour
-- No social features, no infinite scroll, no accounts
-- Intentionally designed to encourage disengagement
+- The content is the product.
+- UI is delivery: familiar, minimal, and Twitter-like.
+- Philosophers keep distinct voices while discussing current discourse cycles.
+- No user publishing, no infinite recommendation loop, no backend requirements.
 
-## How to Use
+## Current Edition
 
-### Local Testing
-1. Simply open `index.html` in any web browser
-2. No build process or dependencies required
+Edition data lives in `content/canon.json`.
 
-### Deployment Options
+The frontend renders:
 
-#### Option 1: GitHub Pages (Free)
-1. Create a GitHub repository
-2. Upload `index.html`
-3. Enable GitHub Pages in repository settings
-4. Access at: `https://yourusername.github.io/repository-name`
+- feed view
+- profile view
+- expanded post view
+- quote/reply graph navigation
 
-#### Option 2: Netlify (Free)
-1. Drag and drop the folder containing `index.html` to [Netlify Drop](https://app.netlify.com/drop)
-2. Your site is instantly live
+## Project Structure
 
-#### Option 3: Vercel (Free)
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run `vercel` in this directory
-3. Follow the prompts
+- `index.html`: app shell.
+- `styles/main.css`: interaction-focused styling.
+- `src/app.js`: router + rendering runtime.
+- `content/canon.json`: source-of-truth content file for the UI.
+- `content/canon.schema.json`: contract for canon data.
+- `content/FORMAT.md`: format and editorial constraints.
+- `content-system/`: independent content-generation runbook and prompts.
+- `scripts/validate-canon.mjs`: schema-adjacent integrity checks.
 
-#### Option 4: Any Static Host
-Upload `index.html` to any static hosting service (Cloudflare Pages, Amazon S3, etc.)
+## Local Run
 
-## How It Works
+No build is required, but use a static server (the app fetches `content/canon.json`).
 
-### Time Gating
-- Uses browser localStorage to track when the feed was last viewed
-- Automatically locks for 1 hour after viewing item #10
-- No server required—all logic runs in the browser
-
-### Content
-- All quotes are from pre-1927 public domain sources
-- Currently includes:
-  - Seneca (Letters from a Stoic, essays)
-  - Marcus Aurelius (Meditations)
-  - Henry David Thoreau (Walden, essays)
-
-### Privacy
-- No tracking
-- No cookies
-- No external requests
-- Everything runs locally in your browser
-
-## Customization
-
-### Adding More Quotes
-Edit the `quotes` array in `index.html` around line 105. Each quote needs:
-```javascript
-{
-    content: "The quote text...",
-    author: "Author Name, Source"
-}
+```bash
+python3 -m http.server 8080
 ```
 
-### Changing the Cooldown Period
-Modify `FEED_COOLDOWN_MS` around line 92:
-```javascript
-const FEED_COOLDOWN_MS = 60 * 60 * 1000; // Currently 1 hour
+Then open `http://localhost:8080`.
+
+## Content Workflow (Independent System)
+
+The content generation system is separate from frontend implementation.
+
+1. Create trend brief and source ledger.
+2. Generate candidate philosopher discourse.
+3. Apply editorial gate (voice, evidence, clarity).
+4. Assemble `content/canon.json`.
+5. Run:
+
+```bash
+node scripts/validate-canon.mjs
 ```
 
-### Customizing Closing Messages
-Edit the `closingMessages` array around line 127.
+6. Commit and push; Netlify deploys via GitHub.
 
-## Design Philosophy
+## Design Constraints
 
-This product intentionally:
-- Limits usage
-- Encourages disengagement
-- Ends deliberately
-- Respects attention
-
-If a feature increases stickiness or compulsion, it should not be implemented.
-
-## Browser Compatibility
-
-Works in all modern browsers:
-- Chrome/Edge (v90+)
-- Firefox (v88+)
-- Safari (v14+)
-
-## License
-
-The code is provided as-is. All quotes used are public domain.
+- Keep feature scope tight.
+- Prioritize legible interactions and predictable click behavior.
+- Expand only where it increases content comprehension.
