@@ -57,7 +57,7 @@ button {
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: background-color 140ms ease-out;
+  transition: background-color 200ms ease-out;
 }
 
 .logo-btn:hover {
@@ -96,7 +96,7 @@ button {
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: background-color 140ms ease-out;
+  transition: background-color 200ms ease-out;
 }
 
 .back-btn:hover {
@@ -110,7 +110,7 @@ button {
 
 .topbar-title {
   font-size: 20px;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .topbar-subtitle {
@@ -129,15 +129,17 @@ button {
 
 .post {
   border-bottom: 1px solid color-mix(in srgb, var(--border) 74%, transparent);
-  padding: 14px 16px;
+  border-left: 2px solid transparent;
+  padding: 16px;
   display: flex;
   gap: 12px;
   cursor: pointer;
-  transition: background-color 160ms ease-out;
+  transition: background-color 200ms ease-out, border-left-color 200ms ease-out;
 }
 
 .post:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: rgba(29, 155, 240, 0.5);
 }
 
 .post:active {
@@ -150,6 +152,7 @@ button {
 
 .post.inset:hover {
   background: transparent;
+  border-left-color: transparent;
 }
 
 .avatar-wrap {
@@ -167,7 +170,8 @@ button {
 }
 
 .avatar:hover {
-  filter: brightness(0.92);
+  filter: brightness(0.9);
+  box-shadow: 0 0 0 2px #000, 0 0 0 4px rgba(29, 155, 240, 0.4);
 }
 
 .avatar-fallback {
@@ -237,45 +241,68 @@ button {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 .tag {
-  color: #1d9bf0;
-  font-size: 15px;
-  line-height: 1.4;
-  cursor: pointer;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  cursor: default;
 }
 
 .quote-card {
-  margin-top: 10px;
+  margin-top: 12px;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 10px;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out;
+  border-radius: 16px;
+  padding: 12px;
+  transition: background-color 200ms ease-out;
 }
 
 .quote-card:hover {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: color-mix(in srgb, #1d9bf0 30%, var(--border));
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .quote-head {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-bottom: 6px;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.quote-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.quote-avatar-fallback {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #30353a, #171a1c);
 }
 
 .quote-text {
   color: var(--text);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 15px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .action-row {
   display: flex;
   margin-top: 8px;
+  margin-left: -8px;
 }
 
 .action-btn {
@@ -398,7 +425,7 @@ button {
   align-items: center;
   gap: 4px;
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .profile-username,
@@ -409,13 +436,13 @@ button {
 }
 
 .profile-bio {
-  margin-top: 10px;
+  margin-top: 12px;
   color: var(--text);
   font-size: 15px;
 }
 
 .profile-meta {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .profile-stats {
@@ -453,6 +480,26 @@ button {
   height: 44px;
 }
 
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.action-btn.like.animate svg {
+  animation: heartPop 250ms ease-out;
+}
+
+@keyframes feedItemIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.post-list > li {
+  opacity: 0;
+  animation: feedItemIn 300ms ease-out forwards;
+}
+
 .hidden {
   display: none !important;
 }
@@ -473,6 +520,19 @@ button {
 
   .view-root {
     padding-bottom: 76px;
+  }
+
+  .post {
+    padding: 12px;
+    border-left-width: 2px;
+  }
+
+  .post-text {
+    font-size: 15px;
+  }
+
+  .profile-body {
+    padding: 0 12px 12px;
   }
 
   .post.emphasized .post-text {

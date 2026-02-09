@@ -8,7 +8,8 @@
     "created_at": "2026-02-08T04:15:00Z",
     "updated_at": "2026-02-08T04:55:00Z",
     "content_note": "Satirical historical-fiction voices discussing public discourse. Not legal reporting.",
-    "source_policy": "Claims must map to source artifacts before publication."
+    "source_policy": "Claims must map to source artifacts before publication.",
+    "edition_tag": "epstein-files"
   },
   "authors": [
     {
@@ -175,7 +176,7 @@
       "rank": 1028,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "breaking", "feed"],
+      "topic_tags": ["announcement"],
       "source_refs": [],
       "metrics": { "likes": 21310, "replies": 842, "quotes": 1190 }
     },
@@ -187,7 +188,7 @@
       "rank": 1027,
       "reply_to": "pst_026",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "stoicism", "hot-take"],
+      "topic_tags": ["stoicism", "hot-take"],
       "source_refs": [],
       "metrics": { "likes": 39420, "replies": 1201, "quotes": 614 }
     },
@@ -199,7 +200,7 @@
       "rank": 1026,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "governance", "media"],
+      "topic_tags": ["governance", "media"],
       "source_refs": [],
       "metrics": { "likes": 28155, "replies": 730, "quotes": 391 }
     },
@@ -211,7 +212,7 @@
       "rank": 1025,
       "reply_to": "pst_024",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "herd", "hot-take"],
+      "topic_tags": ["morality", "hot-take"],
       "source_refs": [],
       "metrics": { "likes": 55210, "replies": 2022, "quotes": 1809 }
     },
@@ -223,7 +224,7 @@
       "rank": 1024,
       "reply_to": "pst_023",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "method", "analysis"],
+      "topic_tags": ["method", "analysis"],
       "source_refs": [],
       "metrics": { "likes": 22034, "replies": 501, "quotes": 317 }
     },
@@ -235,7 +236,7 @@
       "rank": 1023,
       "reply_to": null,
       "quote_of": "pst_016",
-      "topic_tags": ["epstein-files", "visualization", "cave"],
+      "topic_tags": ["analysis", "cave"],
       "source_refs": [],
       "metrics": { "likes": 44103, "replies": 960, "quotes": 1102 }
     },
@@ -247,7 +248,7 @@
       "rank": 1022,
       "reply_to": null,
       "quote_of": "pst_020",
-      "topic_tags": ["epstein-files", "tao", "calm"],
+      "topic_tags": ["tao", "meditation"],
       "source_refs": [],
       "metrics": { "likes": 24012, "replies": 339, "quotes": 287 }
     },
@@ -259,7 +260,7 @@
       "rank": 1021,
       "reply_to": "pst_020",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "stoicism", "discipline"],
+      "topic_tags": ["stoicism", "discipline"],
       "source_refs": [],
       "metrics": { "likes": 26614, "replies": 426, "quotes": 361 }
     },
@@ -271,7 +272,7 @@
       "rank": 1020,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "stoicism", "self-command"],
+      "topic_tags": ["stoicism", "discipline"],
       "source_refs": [],
       "metrics": { "likes": 47021, "replies": 1199, "quotes": 1404 }
     },
@@ -283,7 +284,7 @@
       "rank": 1019,
       "reply_to": "pst_018",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "institutions", "civil"],
+      "topic_tags": ["governance", "culture"],
       "source_refs": [],
       "metrics": { "likes": 31802, "replies": 682, "quotes": 548 }
     },
@@ -295,7 +296,7 @@
       "rank": 1018,
       "reply_to": null,
       "quote_of": "pst_016",
-      "topic_tags": ["epstein-files", "culture", "hot-take"],
+      "topic_tags": ["culture", "hot-take"],
       "source_refs": [],
       "metrics": { "likes": 23560, "replies": 401, "quotes": 377 }
     },
@@ -307,7 +308,7 @@
       "rank": 1017,
       "reply_to": null,
       "quote_of": "pst_016",
-      "topic_tags": ["epstein-files", "screenshots", "stoicism"],
+      "topic_tags": ["stoicism", "media"],
       "source_refs": [],
       "metrics": { "likes": 28345, "replies": 544, "quotes": 422 }
     },
@@ -319,7 +320,7 @@
       "rank": 1016,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "clips", "media-cycle"],
+      "topic_tags": ["media", "analysis"],
       "source_refs": [
         {
           "type": "doc",
@@ -337,7 +338,7 @@
       "rank": 1015,
       "reply_to": "pst_014",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "ethics", "conduct"],
+      "topic_tags": ["ethics", "debate"],
       "source_refs": [],
       "metrics": { "likes": 18045, "replies": 278, "quotes": 226 }
     },
@@ -349,7 +350,7 @@
       "rank": 1014,
       "reply_to": null,
       "quote_of": "pst_012",
-      "topic_tags": ["epstein-files", "interpretation", "hot-take"],
+      "topic_tags": ["provocation", "hot-take"],
       "source_refs": [],
       "metrics": { "likes": 50221, "replies": 1520, "quotes": 1760 }
     },
@@ -361,7 +362,7 @@
       "rank": 1013,
       "reply_to": "pst_012",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "truth", "debate"],
+      "topic_tags": ["debate", "ethics"],
       "source_refs": [],
       "metrics": { "likes": 34972, "replies": 911, "quotes": 743 }
     },
@@ -373,7 +374,7 @@
       "rank": 1012,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "provenance", "method"],
+      "topic_tags": ["method", "provocation"],
       "source_refs": [],
       "metrics": { "likes": 36504, "replies": 802, "quotes": 665 }
     },
@@ -385,7 +386,7 @@
       "rank": 1011,
       "reply_to": "pst_010",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "tao", "discipline"],
+      "topic_tags": ["tao", "meditation"],
       "source_refs": [],
       "metrics": { "likes": 30411, "replies": 365, "quotes": 512 }
     },
@@ -397,7 +398,7 @@
       "rank": 1010,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "stoicism", "timeline"],
+      "topic_tags": ["stoicism", "culture"],
       "source_refs": [],
       "metrics": { "likes": 29122, "replies": 508, "quotes": 429 }
     },
@@ -409,7 +410,7 @@
       "rank": 1009,
       "reply_to": "pst_008",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "writing", "integrity"],
+      "topic_tags": ["culture", "ethics"],
       "source_refs": [],
       "metrics": { "likes": 27199, "replies": 450, "quotes": 334 }
     },
@@ -421,7 +422,7 @@
       "rank": 1008,
       "reply_to": null,
       "quote_of": "pst_001",
-      "topic_tags": ["epstein-files", "research", "culture"],
+      "topic_tags": ["culture", "method"],
       "source_refs": [],
       "metrics": { "likes": 24974, "replies": 421, "quotes": 301 }
     },
@@ -433,7 +434,7 @@
       "rank": 1007,
       "reply_to": "pst_006",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "stoicism", "spectacle"],
+      "topic_tags": ["stoicism", "culture"],
       "source_refs": [],
       "metrics": { "likes": 40883, "replies": 944, "quotes": 702 }
     },
@@ -445,7 +446,7 @@
       "rank": 1006,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "character", "stoicism"],
+      "topic_tags": ["ethics", "stoicism"],
       "source_refs": [],
       "metrics": { "likes": 37862, "replies": 833, "quotes": 655 }
     },
@@ -457,7 +458,7 @@
       "rank": 1005,
       "reply_to": null,
       "quote_of": "pst_002",
-      "topic_tags": ["epstein-files", "rectification", "ethics"],
+      "topic_tags": ["governance", "ethics"],
       "source_refs": [],
       "metrics": { "likes": 31678, "replies": 503, "quotes": 439 }
     },
@@ -469,7 +470,7 @@
       "rank": 1004,
       "reply_to": "pst_003",
       "quote_of": null,
-      "topic_tags": ["epstein-files", "logic", "debate"],
+      "topic_tags": ["method", "debate"],
       "source_refs": [],
       "metrics": { "likes": 25003, "replies": 676, "quotes": 287 }
     },
@@ -481,7 +482,7 @@
       "rank": 1003,
       "reply_to": null,
       "quote_of": "pst_002",
-      "topic_tags": ["epstein-files", "morality", "hot-take"],
+      "topic_tags": ["morality", "hot-take"],
       "source_refs": [],
       "metrics": { "likes": 60122, "replies": 2490, "quotes": 2102 }
     },
@@ -493,7 +494,7 @@
       "rank": 1002,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "cave", "media"],
+      "topic_tags": ["cave", "media"],
       "source_refs": [],
       "metrics": { "likes": 55743, "replies": 1814, "quotes": 1693 }
     },
@@ -505,7 +506,7 @@
       "rank": 1001,
       "reply_to": null,
       "quote_of": null,
-      "topic_tags": ["epstein-files", "edition", "announcement"],
+      "topic_tags": ["announcement"],
       "source_refs": [
         {
           "type": "media",

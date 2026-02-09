@@ -29,7 +29,11 @@
         "created_at": { "type": "string", "format": "date-time" },
         "updated_at": { "type": "string", "format": "date-time" },
         "content_note": { "type": "string", "minLength": 1 },
-        "source_policy": { "type": "string", "minLength": 1 }
+        "source_policy": { "type": "string", "minLength": 1 },
+        "edition_tag": {
+          "type": "string",
+          "pattern": "^[a-z0-9_\\-]{2,40}$"
+        }
       }
     },
     "authors": {
@@ -157,6 +161,7 @@
         "topic_tags": {
           "type": "array",
           "minItems": 1,
+          "maxItems": 4,
           "items": {
             "type": "string",
             "pattern": "^[a-z0-9_\\-]{2,40}$"

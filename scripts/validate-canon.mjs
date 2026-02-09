@@ -181,12 +181,52 @@ for (const postId of postIds) {
   dfs(postId);
 }
 
+// Tag hygiene warnings
+const warnings = [];
+const tagFrequency = new Map();
+const editionTag = canon.meta?.edition_tag || null;
+
+if (Array.isArray(canon.posts)) {
+  for (const post of canon.posts) {
+    if (Array.isArray(post.topic_tags)) {
+      for (const tag of post.topic_tags) {
+        tagFrequency.set(tag, (tagFrequency.get(tag) || 0) + 1);
+      }
+      if (post.topic_tags.length > 4) {
+        issues.push(`Post ${post.id} has ${post.topic_tags.length} tags (max 4).`);
+      }
+    }
+  }
+}
+
+const totalPosts = canon.posts?.length || 0;
+for (const [tag, count] of tagFrequency) {
+  if (tag === editionTag) continue;
+  if (count === 1) {
+    warnings.push(`Tag "${tag}" appears only once. Consider merging or removing.`);
+  }
+  if (totalPosts > 5 && count === totalPosts) {
+    warnings.push(`Tag "${tag}" appears on every post. Consider using edition_tag instead.`);
+  }
+  if (totalPosts > 5 && count / totalPosts > 0.6) {
+    warnings.push(`Tag "${tag}" appears on ${count}/${totalPosts} posts (>${Math.round(60)}%). May be too broad.`);
+  }
+}
+
 if (issues.length > 0) {
   console.error(`Canon validation failed with ${issues.length} issue(s):`);
   for (const issue of issues) {
-    console.error(`- ${issue}`);
+    console.error(`  - ${issue}`);
   }
   process.exit(1);
+}
+
+if (warnings.length > 0) {
+  console.warn(`\n${warnings.length} warning(s):`);
+  for (const w of warnings) {
+    console.warn(`  - ${w}`);
+  }
+  console.log();
 }
 
 console.log("Canon validation passed.");

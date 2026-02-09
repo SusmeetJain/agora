@@ -213,7 +213,7 @@ function renderFeedView() {
   intro.appendChild(introPost);
 
   viewRoot.appendChild(intro);
-  viewRoot.appendChild(renderPostList(state.sortedPosts, { clickable: true }));
+  viewRoot.appendChild(renderPostList(state.sortedPosts, { clickable: true, showTags: false }));
   window.scrollTo({ top: 0, behavior: "auto" });
 }
 
@@ -256,7 +256,7 @@ function renderProfileView(authorId) {
   if (posts.length === 0) {
     viewRoot.appendChild(renderEmptyState("No posts in this edition."));
   } else {
-    viewRoot.appendChild(renderPostList(posts, { clickable: true }));
+    viewRoot.appendChild(renderPostList(posts, { clickable: true, showTags: false }));
   }
 
   window.scrollTo({ top: 0, behavior: "auto" });
@@ -304,12 +304,12 @@ function renderPostView(postId) {
 
   if (replies.length > 0) {
     viewRoot.appendChild(renderThreadLabel("Replies"));
-    viewRoot.appendChild(renderPostList(replies, { clickable: true }));
+    viewRoot.appendChild(renderPostList(replies, { clickable: true, showTags: false }));
   }
 
   if (quotes.length > 0) {
     viewRoot.appendChild(renderThreadLabel("Quote posts"));
-    viewRoot.appendChild(renderPostList(quotes, { clickable: true }));
+    viewRoot.appendChild(renderPostList(quotes, { clickable: true, showTags: false }));
   }
 
   window.scrollTo({ top: 0, behavior: "auto" });
@@ -319,8 +319,9 @@ function renderPostList(posts, options = {}) {
   const list = document.createElement("ul");
   list.className = "post-list";
 
-  posts.forEach((post) => {
+  posts.forEach((post, index) => {
     const item = document.createElement("li");
+    item.style.animationDelay = `${Math.min(index, 15) * 40}ms`;
     item.appendChild(renderPostCard(post, options));
     list.appendChild(item);
   });
@@ -400,15 +401,24 @@ function renderPostCard(post, options = {}) {
   main.appendChild(text);
 
   if (showTags) {
-    const tags = document.createElement("div");
-    tags.className = "post-tags";
-    post.topic_tags.forEach((tagValue) => {
-      const tag = document.createElement("span");
-      tag.className = "tag";
-      tag.textContent = `#${tagValue}`;
-      tags.appendChild(tag);
-    });
-    main.appendChild(tags);
+    const editionSlug = state.canon.meta.edition_tag
+      || (state.canon.meta.edition_id
+        ? state.canon.meta.edition_id.replace(/^\d{4}-\d{2}-\d{2}-/, "").replace(/-\d+$/, "")
+        : null);
+
+    const filteredTags = post.topic_tags.filter((t) => t !== editionSlug);
+
+    if (filteredTags.length > 0) {
+      const tags = document.createElement("div");
+      tags.className = "post-tags";
+      filteredTags.forEach((tagValue) => {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = tagValue;
+        tags.appendChild(tag);
+      });
+      main.appendChild(tags);
+    }
   }
 
   if (post.quote_of) {
@@ -446,6 +456,21 @@ function renderQuoteCard(quotedId) {
   const head = document.createElement("div");
   head.className = "quote-head";
 
+  const avatar = document.createElement("img");
+  avatar.className = "quote-avatar";
+  avatar.src = quotedAuthor.image;
+  avatar.alt = quotedAuthor.display_name;
+  avatar.loading = "lazy";
+  avatar.width = 20;
+  avatar.height = 20;
+  avatar.addEventListener("error", () => {
+    const fallback = document.createElement("div");
+    fallback.className = "quote-avatar-fallback";
+    fallback.textContent = (quotedAuthor.display_name && quotedAuthor.display_name[0]) || "?";
+    avatar.replaceWith(fallback);
+  });
+  head.appendChild(avatar);
+
   const name = document.createElement("span");
   name.className = "name";
   name.textContent = quotedAuthor.display_name;
@@ -454,8 +479,18 @@ function renderQuoteCard(quotedId) {
   user.className = "user";
   user.textContent = quotedAuthor.username;
 
+  const dot = document.createElement("span");
+  dot.className = "dot";
+  dot.textContent = "·";
+
+  const time = document.createElement("span");
+  time.className = "timestamp";
+  time.textContent = formatRelativeTime(quoted.created_at);
+
   head.appendChild(name);
   head.appendChild(user);
+  head.appendChild(dot);
+  head.appendChild(time);
 
   const text = document.createElement("p");
   text.className = "quote-text";
@@ -521,6 +556,16 @@ function updateLikeButtons(postId) {
     .forEach((button) => {
       button.classList.toggle("active", liked);
       button.innerHTML = `${liked ? icons.heartFilled : icons.heartOutline}<span class="count">${formatCount(displayCount)}</span>`;
+
+      if (liked) {
+        button.classList.add("animate");
+        const svg = button.querySelector("svg");
+        if (svg) {
+          svg.addEventListener("animationend", () => {
+            button.classList.remove("animate");
+          }, { once: true });
+        }
+      }
     });
 }
 
@@ -557,6 +602,9 @@ function createAvatarElement(author, isProfile = false) {
   image.src = author.image;
   image.alt = author.display_name;
   image.loading = "lazy";
+  image.width = isProfile ? 104 : 40;
+  image.height = isProfile ? 104 : 40;
+  image.crossOrigin = "anonymous";
 
   image.addEventListener("error", () => {
     image.replaceWith(createAvatarFallback(author.display_name, isProfile));
@@ -600,7 +648,36 @@ function renderFatalError(error) {
   viewRoot.appendChild(empty);
 }
 
+function getPostTier(post) {
+  if (post.author_id === "agora") {
+    return 3;
+  }
+
+  if (post.reply_to) {
+    const parent = state.postsById.get(post.reply_to);
+    if (parent && parent.author_id !== "agora") {
+      return 1;
+    }
+  }
+
+  if (post.quote_of) {
+    const quoted = state.postsById.get(post.quote_of);
+    if (quoted && quoted.author_id !== "agora") {
+      return 1;
+    }
+  }
+
+  return 2;
+}
+
 function sortPosts(a, b) {
+  const tierA = getPostTier(a);
+  const tierB = getPostTier(b);
+
+  if (tierA !== tierB) {
+    return tierA - tierB;
+  }
+
   if (a.rank !== b.rank) {
     return b.rank - a.rank;
   }

@@ -13,9 +13,11 @@ A static, read-only cultural feed where ancient philosophers argue in modern int
 
 Edition data lives in `content/canon.json`.
 
+The feed is sorted by tier: philosopher-to-philosopher exchanges surface first, standalone posts follow, and @agorawire editorial posts sit at the bottom. Within each tier, posts are ordered by rank.
+
 The frontend renders:
 
-- feed view
+- feed view (tier-ordered)
 - profile view
 - expanded post view
 - quote/reply graph navigation
@@ -62,3 +64,6 @@ node scripts/validate-canon.mjs
 - Keep feature scope tight.
 - Prioritize legible interactions and predictable click behavior.
 - Expand only where it increases content comprehension.
+- Quote cards follow Twitter/X visual language: avatar + name + handle + timestamp, 3-line clamp, 16px radius.
+- Interaction polish: left border accent on hover, avatar glow, heart pop animation, staggered feed entrance.
+- Content system enforces philosopher-specific voice, tag hygiene (max 4 tags, no edition tag in UI), and editorial anti-patterns.
