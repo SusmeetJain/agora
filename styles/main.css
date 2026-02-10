@@ -387,6 +387,12 @@ button {
   gap: 0;
 }
 
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .post.emphasized .name {
   font-size: 17px;
 }
@@ -395,14 +401,9 @@ button {
   font-size: 15px;
 }
 
-.post.emphasized .dot,
-.post.emphasized .timestamp {
-  display: none;
-}
-
 .post.emphasized .post-text {
-  font-size: 23px;
-  line-height: 1.4;
+  font-size: 17px;
+  line-height: 1.45;
   margin-top: 12px;
 }
 
@@ -623,6 +624,6 @@ button {
   }
 
   .post.emphasized .post-text {
-    font-size: 20px;
+    font-size: 17px;
   }
 }

@@ -363,33 +363,57 @@ function renderPostCard(post, options = {}) {
     navigate(`/profile/${author.id}`);
   });
 
-  head.appendChild(name);
+  if (emphasized) {
+    const nameRow = document.createElement("div");
+    nameRow.className = "name-row";
+    nameRow.appendChild(name);
 
-  if (author.verified) {
-    const badge = document.createElement("span");
-    badge.innerHTML = icons.verified;
-    head.appendChild(badge);
+    if (author.verified) {
+      const badge = document.createElement("span");
+      badge.innerHTML = icons.verified;
+      nameRow.appendChild(badge);
+    }
+
+    head.appendChild(nameRow);
+
+    const user = document.createElement("span");
+    user.className = "user link";
+    user.textContent = author.username;
+    user.addEventListener("click", (event) => {
+      event.stopPropagation();
+      navigate(`/profile/${author.id}`);
+    });
+
+    head.appendChild(user);
+  } else {
+    head.appendChild(name);
+
+    if (author.verified) {
+      const badge = document.createElement("span");
+      badge.innerHTML = icons.verified;
+      head.appendChild(badge);
+    }
+
+    const user = document.createElement("span");
+    user.className = "user link";
+    user.textContent = author.username;
+    user.addEventListener("click", (event) => {
+      event.stopPropagation();
+      navigate(`/profile/${author.id}`);
+    });
+
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.textContent = "·";
+
+    const time = document.createElement("span");
+    time.className = "timestamp";
+    time.textContent = formatRelativeTime(post.created_at);
+
+    head.appendChild(user);
+    head.appendChild(dot);
+    head.appendChild(time);
   }
-
-  const user = document.createElement("span");
-  user.className = "user link";
-  user.textContent = author.username;
-  user.addEventListener("click", (event) => {
-    event.stopPropagation();
-    navigate(`/profile/${author.id}`);
-  });
-
-  const dot = document.createElement("span");
-  dot.className = "dot";
-  dot.textContent = "·";
-
-  const time = document.createElement("span");
-  time.className = "timestamp";
-  time.textContent = formatRelativeTime(post.created_at);
-
-  head.appendChild(user);
-  head.appendChild(dot);
-  head.appendChild(time);
 
   const text = document.createElement("p");
   text.className = "post-text";
