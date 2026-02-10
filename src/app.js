@@ -274,20 +274,18 @@ function renderPostView(postId) {
   viewRoot.innerHTML = "";
 
   const parentChain = getParentChain(focusPost);
-  parentChain.forEach((parentPost, index) => {
-    viewRoot.appendChild(
-      renderPostCard(parentPost, {
-        clickable: true,
-        showTags: false,
-        showActions: false
-      })
-    );
+  parentChain.forEach((parentPost) => {
+    const parentCard = renderPostCard(parentPost, {
+      clickable: true,
+      showTags: false,
+      showActions: false
+    });
+    parentCard.classList.add("thread-parent");
+    viewRoot.appendChild(parentCard);
 
-    if (index < parentChain.length - 1) {
-      const line = document.createElement("div");
-      line.className = "context-line";
-      viewRoot.appendChild(line);
-    }
+    const line = document.createElement("div");
+    line.className = "context-line";
+    viewRoot.appendChild(line);
   });
 
   viewRoot.appendChild(
@@ -414,7 +412,7 @@ function renderPostCard(post, options = {}) {
       filteredTags.forEach((tagValue) => {
         const tag = document.createElement("span");
         tag.className = "tag";
-        tag.textContent = tagValue;
+        tag.textContent = "#" + tagValue;
         tags.appendChild(tag);
       });
       main.appendChild(tags);
@@ -428,8 +426,25 @@ function renderPostCard(post, options = {}) {
     }
   }
 
+  if (emphasized) {
+    const datetimeLine = document.createElement("div");
+    datetimeLine.className = "post-datetime";
+    datetimeLine.textContent = formatFullDateTime(post.created_at);
+    main.appendChild(datetimeLine);
+    main.appendChild(createDivider());
+
+    const statsBar = renderStatsBar(post);
+    if (statsBar) {
+      main.appendChild(statsBar);
+      main.appendChild(createDivider());
+    }
+  }
+
   if (showActions) {
     main.appendChild(renderActionRow(post));
+    if (emphasized) {
+      main.appendChild(createDivider());
+    }
   }
 
   card.appendChild(avatarWrap);
@@ -567,6 +582,12 @@ function updateLikeButtons(postId) {
         }
       }
     });
+
+  document
+    .querySelectorAll(`.stats-like-count[data-post-id="${escapedPostId}"]`)
+    .forEach((el) => {
+      el.innerHTML = '<span class="stat-number">' + formatCount(displayCount) + "</span> Likes";
+    });
 }
 
 function getParentChain(post) {
@@ -693,6 +714,69 @@ function formatCount(value) {
     return `${(value / 1000).toFixed(1)}K`;
   }
   return `${value}`;
+}
+
+function formatFullDateTime(isoDateTime) {
+  const date = new Date(isoDateTime);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  var timeStr = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  });
+
+  var dateStr = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
+
+  return timeStr + " \u00B7 " + dateStr;
+}
+
+function createDivider() {
+  var div = document.createElement("div");
+  div.className = "detail-divider";
+  return div;
+}
+
+function renderStatsBar(post) {
+  var liked = state.likedPostIds.has(post.id);
+  var likeCount = liked ? post.metrics.likes + 1 : post.metrics.likes;
+
+  if (likeCount === 0 && post.metrics.replies === 0 && post.metrics.quotes === 0) {
+    return null;
+  }
+
+  var bar = document.createElement("div");
+  bar.className = "stats-bar";
+
+  if (post.metrics.replies > 0) {
+    var stat = document.createElement("span");
+    stat.className = "stat-item";
+    stat.innerHTML = '<span class="stat-number">' + formatCount(post.metrics.replies) + "</span> Replies";
+    bar.appendChild(stat);
+  }
+
+  if (post.metrics.quotes > 0) {
+    var stat = document.createElement("span");
+    stat.className = "stat-item";
+    stat.innerHTML = '<span class="stat-number">' + formatCount(post.metrics.quotes) + "</span> Quotes";
+    bar.appendChild(stat);
+  }
+
+  if (likeCount > 0) {
+    var stat = document.createElement("span");
+    stat.className = "stat-item stats-like-count";
+    stat.dataset.postId = post.id;
+    stat.innerHTML = '<span class="stat-number">' + formatCount(likeCount) + "</span> Likes";
+    bar.appendChild(stat);
+  }
+
+  return bar;
 }
 
 function formatRelativeTime(isoDateTime) {

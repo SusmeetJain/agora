@@ -245,10 +245,14 @@ button {
 }
 
 .tag {
-  color: var(--muted);
-  font-size: 13px;
+  color: var(--accent);
+  font-size: 14px;
   line-height: 1.35;
-  cursor: default;
+  cursor: pointer;
+}
+
+.tag:hover {
+  text-decoration: underline;
 }
 
 .quote-card {
@@ -349,38 +353,121 @@ button {
 
 .context-line {
   margin-left: 35px;
-  border-left: 2px solid color-mix(in srgb, var(--border) 75%, transparent);
-  height: 10px;
+  border-left: 2px solid var(--border);
+  height: 12px;
 }
 
 .post.emphasized {
   cursor: default;
+  padding: 16px 16px 0;
+  border-bottom: none;
+  border-left-color: transparent;
 }
 
 .post.emphasized:hover {
   background: transparent;
+  border-left-color: transparent;
+}
+
+.post.emphasized .avatar-wrap {
+  width: 48px;
+  height: 48px;
+}
+
+.post.emphasized .avatar,
+.post.emphasized .avatar-fallback {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+}
+
+.post.emphasized .post-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.post.emphasized .name {
+  font-size: 17px;
+}
+
+.post.emphasized .user {
+  font-size: 15px;
+}
+
+.post.emphasized .dot,
+.post.emphasized .timestamp {
+  display: none;
 }
 
 .post.emphasized .post-text {
-  font-size: 28px;
-  line-height: 1.22;
-  margin-top: 8px;
+  font-size: 23px;
+  line-height: 1.4;
+  margin-top: 12px;
+}
+
+.post-datetime {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 16px;
+  padding-bottom: 12px;
+}
+
+.detail-divider {
+  border-top: 1px solid var(--border);
+}
+
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  padding: 12px 0;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.post.emphasized .action-row {
+  margin-left: 0;
+  margin-top: 0;
+  padding: 4px 0;
+}
+
+.post.emphasized .action-btn {
+  padding: 10px 14px;
+}
+
+.post.emphasized .action-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.post.emphasized .count {
+  font-size: 14px;
+}
+
+.post.thread-parent {
+  border-bottom: none;
 }
 
 .thread-label {
-  color: var(--muted);
-  font-size: 15px;
-  font-weight: 700;
-  padding: 14px 16px 8px;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 800;
+  padding: 16px 16px 8px;
   border-top: 1px solid var(--border);
 }
 
 .edition-note {
   border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(29, 155, 240, 0.03) 0%, transparent 100%);
 }
 
 .edition-title {
   font-weight: 700;
+  font-size: 17px;
 }
 
 .edition-meta {
@@ -536,6 +623,6 @@ button {
   }
 
   .post.emphasized .post-text {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
